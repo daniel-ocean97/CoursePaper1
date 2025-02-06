@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "coursepaper1"
+version = "0.1.0"
+description = ""
+authors = ["Даниил Ермилов <yndx-daniel-ocean@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.1.1"
+isort = "^6.0.0"
+black = "^25.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+exclude = '''
+(
+  /(
+    | \.git
+    | dist
+  )/
+)
+'''
+
+[tool.isort]
+line_length = 119
+
+[tool.mypy]
+disallow_untyped_defs = true
+warn_return_any = true
+exclude = 'venv'
