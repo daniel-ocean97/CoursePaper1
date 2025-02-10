@@ -1,15 +1,18 @@
 import json
 from datetime import datetime
+import os
+from pathlib import Path
 
 import pandas as pd
 
 from src.utils import actual_currencies, cards_reading, greetings, stock_prices, top_transactions
 
+data_file_path = Path(__file__).resolve().parent.parent / "data" / "operations.xlsx"
 
-def get_data():
-    df = pd.read_excel("../data/operations.xlsx")
-    df["Дата платежа"] = pd.to_datetime(df["Дата платежа"], dayfirst=True)
-    return df
+
+df = pd.read_excel(data_file_path)
+df["Дата платежа"] = pd.to_datetime(df["Дата платежа"], dayfirst=True)
+
 
 
 def main_page(date, data):
@@ -26,4 +29,4 @@ def main_page(date, data):
     return json_result
 
 
-print(main_page("2021-12-25 15:12:33", get_data()))
+print(main_page("2021-12-25 15:12:33", df))
