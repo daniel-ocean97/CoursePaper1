@@ -1,35 +1,25 @@
-import json
-from datetime import datetime
-
-import pandas as pd
-import requests
-from dotenv import load_dotenv
 import logging
 import os
-from pathlib import Path
+from datetime import datetime
+
+import requests
+
+from src.constants import currency_token, stocks_token, user_settings
 
 # Создаем папку logs, если она не существует
-os.makedirs('../logs', exist_ok=True)
+os.makedirs("../logs", exist_ok=True)
 
 # Настройка логгера
 logging.basicConfig(
-    filename='../logs/utils.log',  # Путь к файлу логов
-    filemode='a',              # Режим открытия файла (добавление)
-    format='%(asctime)s - %(levelname)s - %(message)s',  # Формат логов
-    level=logging.DEBUG         # Уровень логирования
+    filename="../logs/utils.log",
+    filemode="a",
+    format="%(asctime)s - %(levelname)s - %(message)s",  # Формат логов
+    level=logging.DEBUG,  # Уровень логирования
 )
-
-load_dotenv()
-currency_token = os.getenv("CURRENCY_API_KEY")
-stocks_token = os.getenv("STOCKS_API_KEY")
-
-file_path = Path(__file__).resolve().parent.parent / "user_settings.json"
-with open(file_path, "r") as f:
-    user_settings = json.load(f)
 
 
 def greetings():
-    """ Функция, возвращающая приветствие в зависимости от времени суток """
+    """Функция, возвращающая приветствие в зависимости от времени суток"""
     current_time = datetime.now().hour  # Получаем текущий час
     if 5 <= current_time < 12:
         return "Доброе утро!"
@@ -41,28 +31,25 @@ def greetings():
         return "Доброй ночи!"
 
 
-
 def cards_reading(end_date, start_date, df):
-    """ Функция, предоставляющая информацию расходов по картам """
-    logging.info('Starting cards_reading')
+    """Функция, предоставляющая информацию расходов по картам"""
+    logging.info("Starting cards_reading")
     filtered_df = df.loc[
         (df["Дата платежа"] >= start_date) & (df["Дата платежа"] <= end_date) & ((df["Сумма операции"]) < 0)
     ]
-    logging.info('Filter DF by fate')
+    logging.info("Filter DF by fate")
     result = filtered_df.groupby("Номер карты")["Сумма операции"].sum().round(2).reset_index()
-    logging.info('Group DataFrame')
+    logging.info("Group DataFrame")
     result["Кешбек"] = (result["Сумма операции"] / -100).round(2)
     logging.info("Successful completion of the function")
     return list(result.to_dict(orient="index").values())
 
 
-
-
 def top_transactions(start_date, end_date, df):
-    """ Функция, показывающая топ-5 трат за указанный период """
-    logging.info('Starting top_transactions')
+    """Функция, показывающая топ-5 трат за указанный период"""
+    logging.info("Starting top_transactions")
     sorted_df = df.sort_values(by="Сумма операции", ascending=True)
-    logging.info('DataFrame sotred')
+    logging.info("DataFrame sotred")
     filtered_df = sorted_df.loc[(df["Дата платежа"] >= start_date) & (df["Дата платежа"] <= end_date)]
     result = filtered_df.head()
     result = result[["Дата операции", "Сумма операции с округлением", "Категория", "Описание"]]
@@ -71,7 +58,7 @@ def top_transactions(start_date, end_date, df):
 
 
 def actual_currencies():
-    """ Функция, которая показывает актуальные курсы валют"""
+    """Функция, которая показывает актуальные курсы валют"""
     logging.info("Starting actual_currencies")
     final_result = []
     for currency in user_settings["user_currencies"]:
@@ -91,7 +78,7 @@ def actual_currencies():
 
 
 def stock_prices():
-    """ Функция, которая показывает актуальные цены на акции """
+    """Функция, которая показывает актуальные цены на акции"""
     logging.info("Starting stock_prices")
     final_result = []
     for company in user_settings["user_stocks"]:
