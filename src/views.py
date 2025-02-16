@@ -20,6 +20,3 @@ def main_page(date, data):
     result["stock_prices"] = stock_prices()
     json_result = json.dumps(result, ensure_ascii=False, indent=4)
     return json_result
-
-
-# print(main_page("2021-12-25 15:12:33", DF))

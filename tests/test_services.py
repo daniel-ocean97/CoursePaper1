@@ -2,7 +2,7 @@ from src.services import search_transactions_by_mobile_phone
 
 
 def test_search_transactions_by_mobile_phone(search_mobile_data):
-    """ Функция для тестирования search_transactions_by_mobile_phone """
+    """Функция для тестирования search_transactions_by_mobile_phone"""
     expected_result = """[
     {
         "Дата операции": "18.11.2021 21:15:27",

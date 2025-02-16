@@ -13,3 +13,4 @@ with open(file_path, "r") as f:
     user_settings = json.load(f)
 data_file_path = Path(__file__).resolve().parent.parent / "data" / "operations.xlsx"
 DF = pd.read_excel(data_file_path)
+json_report_path_file = Path(__file__).resolve().parent.parent / "logs" / "json_report.json"

@@ -93,3 +93,7 @@ def stock_prices():
     logging.info("Successful completion of the function")
 
     return final_result
+
+
+# print(actual_currencies())
+# print(stock_prices())

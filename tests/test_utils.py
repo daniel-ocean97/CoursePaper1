@@ -20,7 +20,7 @@ from src.utils import actual_currencies, cards_reading, greetings, stock_prices,
     ],
 )
 def test_greetings(time, expected):
-    """ Функция для тестирования greetings """
+    """Функция для тестирования greetings"""
     # Используем patch для мокирования метода now() класса datetime
     with patch("src.utils.datetime") as mock_datetime:
         # Устанавливаем возвращаемое значение для метода now().hour
@@ -31,7 +31,7 @@ def test_greetings(time, expected):
 
 
 def test_cards_reading(transactions_data):
-    """ Функция для тестирования cards_reading """
+    """Функция для тестирования cards_reading"""
     assert cards_reading("2021-12-25 15:12:33", "2021-12-01 15:12:33", transactions_data) == [
         {"Номер карты": "*4556", "Сумма операции": -952.9, "Кешбек": 9.53},
         {"Номер карты": "*5091", "Сумма операции": -13136.0, "Кешбек": 131.36},
@@ -40,7 +40,7 @@ def test_cards_reading(transactions_data):
 
 
 def test_top_transactions(transactions_data):
-    """ Функция для тестирования top_transactions """
+    """Функция для тестирования top_transactions"""
     assert top_transactions("2021-12-01 15:12:33", "2021-12-25 15:12:33", transactions_data) == [
         {
             "Дата операции": "22.12.2021 23:30:44",
@@ -77,7 +77,7 @@ def test_top_transactions(transactions_data):
 
 @patch("requests.request")
 def test_actual_currencies(mock_request):
-    """ Функция для тестирования actual_currencies """
+    """Функция для тестирования actual_currencies"""
     mock_response = Mock()
     mock_response.json.return_value = {"result": 100.123}
     mock_request.return_value = mock_response
@@ -86,7 +86,7 @@ def test_actual_currencies(mock_request):
 
 @patch("requests.request")
 def test_stock_prices(mock_request):
-    """ Функция для тестирования stock_prices """
+    """Функция для тестирования stock_prices"""
     mock_response = Mock()
     mock_response.json.return_value = {"price": 322.8, "currency": "USD"}
     mock_request.return_value = mock_response
