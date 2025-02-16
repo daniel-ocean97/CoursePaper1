@@ -14,7 +14,7 @@ def main():
     phone_search_query = input("Произвести ли поиск транзакций, где в описании указан номер телефона? да/нет\n")
     if phone_search_query.lower() == "да":
         print(search_transactions_by_mobile_phone(listed_df))
-    transactions_report_query = input("Произвести отчёт по транзакциями за последние 3 месяца категории? да/нет\n")
+    transactions_report_query = input("Произвести отчёт по транзакциями за последние 3 месяца по категории? да/нет\n")
     if transactions_report_query.lower() == "да":
         category_query = input("Укажите категорию:\n")
         report_to_file = input("Хотите ли записать результат отчёта в файл? да/нет\n")
@@ -35,3 +35,4 @@ def main():
             print(expenses_by_category(DF, category_query, "31.12.2021 23:59:59"))
 
     print("Конец работы приложения")
+

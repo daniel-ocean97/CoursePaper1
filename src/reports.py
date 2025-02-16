@@ -32,13 +32,12 @@ def expenses_by_category(data, category, date=datetime.now()):
         (data["Дата платежа"] >= start_date) & (data["Дата платежа"] <= end_date) & ((data["Сумма операции"]) < 0)
     ]
     logging.info("Filtering by date")
-    temp_result = filtered_df.groupby("Категория")[["Сумма операции", "Описание"]].agg(list).reset_index()
+    temp_result = filtered_df.groupby("Категория")["Сумма операции с округлением"].sum().reset_index()
     temp_result = list(temp_result.to_dict(orient="index").values())
-    logging.info("Converting from a dataframe to a dictionary list")
-    result = []
-    for expense in temp_result:
-        if expense["Категория"] == category.title():
-            for i in range(len(expense["Сумма операции"])):
-                result.append({"Сумма операции": expense["Сумма операции"][i], "Описание": expense["Описание"][i]})
-    logging.info("Successful completion of the function")
-    return json.dumps(result, ensure_ascii=False, indent=4)
+    for current in temp_result:
+        if current["Категория"] == category.title():
+            result = current
+            return json.dumps(result, ensure_ascii=False, indent=4)
+    return "Указанной категории не существует"
+
+
