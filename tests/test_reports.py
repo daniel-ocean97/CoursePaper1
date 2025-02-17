@@ -6,11 +6,10 @@ from src.reports import expenses_by_category
 def test_expenses_by_category(data_for_reports_test):
     """Функция для тестирования expenses_by_category"""
     expected_result = json.dumps(
-        [
-            {"Сумма операции": -100, "Описание": "Обед"},
-            {"Сумма операции": -200, "Описание": "Продукты"},
-            {"Сумма операции": -80, "Описание": "Кофе"},
-        ],
+        {
+            "Категория": "Еда",
+            "Сумма операции с округлением": 380
+        },
         ensure_ascii=False,
         indent=4,
     )
